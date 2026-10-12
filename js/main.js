@@ -80,7 +80,7 @@ modes.text = {
     const v = $('#txt').value;
     if (!v.trim()) { M.shape = null; fit(M); return; }
     const a = mainArea();
-    const perLine = Math.max(4.6, Math.min(8, (a.w / a.h) * 6));
+    const perLine = Math.max(5.3, Math.min(8, (a.w / a.h) * 6));
     setMain(textShape(v, MAX, { maxW: 150 * perLine }));
     fit(M, 0.9);
   },
@@ -210,7 +210,7 @@ modes.sword = {
     this.hy += (py - this.hy) * Math.min(1, dt * 22);
     const vx = (this.hx - ox) / dt;
     this.svx += (vx - this.svx) * Math.min(1, dt * 15);
-    const target = Math.max(-2.1, Math.min(2.1, this.svx * 0.0026));
+    const target = Math.max(-1.35, Math.min(1.35, this.svx * 0.0022));
     M.rot += (target - M.rot) * Math.min(1, dt * 14);
     M.x = this.hx; M.y = this.hy;
     const len = 590 * M.scale;
@@ -405,7 +405,7 @@ modes.summon = {
     setMain(personaShape(p, MAX));
     fit(M, 0.9);
     label(`<b>${p.name}</b>${p.title}`);
-    if (!quiet) { sfx.summon(); sw.burst(M.x, M.y, 300); setTimeout(() => say(p.lines.greet[0]), PV ? 0 : 700); }
+    if (!quiet) { sfx.summon(); sw.burst(M.x, M.y, 300); if (PV) say(p.lines.greet[0]); else setTimeout(() => say(p.lines.greet[0]), 700); }
     $('#takeout').textContent = `🐉 ${p.name.split(/[・ ]/)[0]}を連れ出す`;
   },
   ask(q) {
@@ -428,6 +428,7 @@ function takeOut(p) {
   say(reply(p, '一緒に行こう'), 'comp', 4);
 }
 function dismissComp() {
+  if (bub.anchor === 'comp') bub.t = 0;
   sw.comp = null; st.compP = null; $('#comp-chip').hidden = true;
   modes[st.mode].layout?.();
 }
@@ -475,7 +476,7 @@ function placeBubble() {
   const L = bub.anchor === 'comp' && sw.comp ? sw.comp : M;
   if (!L.shape) { el.classList.remove('show'); return; }
   const x = Math.max(150, Math.min(W - 150, L.x));
-  const y = Math.max(90, L.y - L.shape.h * L.scale * 0.5 + (L.shape.oy || 0) * L.scale + 10);
+  const y = Math.max(PV ? 200 : 90, L.y - L.shape.h * L.scale * 0.5 + (L.shape.oy || 0) * L.scale + 10);
   el.style.left = `${x}px`; el.style.top = `${y}px`;
   el.classList.add('show');
 }
@@ -520,6 +521,7 @@ function resize() {
 
 function setMode(name) {
   st.mode = name;
+  sw.stiff = name === 'sword' ? 7 : 1;
   $$('#tabs button').forEach((b) => b.classList.toggle('on', b.dataset.tab === name));
   $$('#panels section').forEach((p) => p.classList.toggle('on', p.dataset.panel === name));
   measure();
