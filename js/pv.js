@@ -63,7 +63,7 @@ const C = (t, fn) => cues.push([t, fn]);
 
 // 0〜2s つかみ：文字がその場で群れになる
 C(0.0, () => { $('#txt').value = ''; NS.setMode('text'); sw.setCount(16000, NS.W / 2, A().y + A().h / 2); ev('boom'); });
-typeInto('#txt', 'これ全部ナノボット', 0.15, 0.9, cues);
+typeInto('#txt', 'これ全部 ナノボット', 0.15, 0.9, cues);
 C(0.6, () => caption('この光、<em>全部ロボット</em>'));
 // 2〜4s 数
 C(2.1, () => { click('[data-tab=count]'); });
@@ -148,7 +148,7 @@ C(36.5, keys({}));
 // 36.8〜41s 締め
 C(36.8, () => { click('#comp-chip'); click('[data-tab=color]'); click('#color-modes .chip:nth-child(4)'); });
 C(37.0, () => { click('[data-tab=text]'); $('#txt').value = ''; });
-typeInto('#txt', 'あなたなら何を作る？', 37.1, 1.1, cues);
+typeInto('#txt', 'あなたなら 何を作る？', 37.1, 1.1, cues);
 C(37.3, () => caption('あなたなら<em>何を作る？</em>'));
 C(38.6, () => {
   end.style.display = 'flex';

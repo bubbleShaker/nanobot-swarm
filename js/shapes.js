@@ -50,9 +50,9 @@ function wrapLines(ctx, text, maxW) {
     for (const ch of Array.from(para)) {
       const t = line + ch;
       if (ctx.measureText(t).width > maxW && line) {
-        // 英単語の途中なら、空白の位置で折る
+        // 行に空白があれば、その位置で折る
         const sp = line.lastIndexOf(' ');
-        if (/[A-Za-z0-9]/.test(ch) && sp > 0) { out.push(line.slice(0, sp)); line = line.slice(sp + 1) + ch; }
+        if (sp > 0) { out.push(line.slice(0, sp)); line = line.slice(sp + 1) + ch; }
         else { out.push(line); line = ch === ' ' ? '' : ch; }
       } else line = t;
     }
