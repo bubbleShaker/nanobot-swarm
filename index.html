@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>NANO SWARM — ナノボット操縦ゲーム</title>
+<meta name="description" content="数万体のナノボットを操って、文字・乗り物・剣・動物・絵・名画・歴史上の人物を空中に組み上げるブラウザゲーム。">
+<meta name="theme-color" content="#05060d">
+<meta property="og:title" content="NANO SWARM — ナノボット操縦ゲーム">
+<meta property="og:description" content="2 万体のナノボットで、文字も剣もドラゴンも名画も作れる。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%2300f0ff'><circle cx='20' cy='20' r='6'/><circle cx='44' cy='20' r='6'/><circle cx='32' cy='40' r='6'/><circle cx='12' cy='46' r='4'/><circle cx='52' cy='46' r='4'/></g></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="stage"></canvas>
+
+<header id="top">
+  <div class="logo">NANO<span>SWARM</span></div>
+  <div id="stat"><i></i><b id="cnt">0</b> bots</div>
+  <button id="comp-chip" hidden></button>
+  <button id="mute" aria-label="音のオン・オフ">🔇</button>
+</header>
+<div id="label"></div>
+<div id="hint"></div>
+<div id="bubble"></div>
+<div id="toast"></div>
+
+<nav id="dock">
+  <div id="tabs">
+    <button data-tab="text" class="on">🔤<span>文字</span></button>
+    <button data-tab="color">🎨<span>色</span></button>
+    <button data-tab="count">⬢<span>数</span></button>
+    <button data-tab="vehicle">🐉<span>乗り物</span></button>
+    <button data-tab="sword">⚔️<span>剣</span></button>
+    <button data-tab="animal">🐈<span>動物</span></button>
+    <button data-tab="draw">✏️<span>お絵描き</span></button>
+    <button data-tab="art">🖼️<span>名画</span></button>
+    <button data-tab="summon">🧙<span>召喚</span></button>
+  </div>
+  <div id="panels">
+    <section data-panel="text" class="on">
+      <input id="txt" type="text" maxlength="40" autocomplete="off" placeholder="文字を入力すると、群れがその場で組み上がる" value="NANO SWARM">
+      <div class="chips" id="text-chips"></div>
+    </section>
+    <section data-panel="color">
+      <div class="chips" id="color-modes"></div>
+      <div class="chips" id="swatches"></div>
+      <div class="row"><label>色 1 <input id="c1" type="color" value="#00e5ff"></label><label>色 2 <input id="c2" type="color" value="#ff40d2"></label></div>
+    </section>
+    <section data-panel="count">
+      <div class="row"><input id="num" type="range" min="300" step="100"><output id="num-out"></output></div>
+      <div class="chips" id="count-chips"></div>
+      <div class="chips"><button id="spin3d" class="chip">🌀 3D 回転</button><button id="boom" class="chip">💥 爆散</button></div>
+    </section>
+    <section data-panel="vehicle">
+      <div class="chips" id="vehicles"></div>
+      <div class="chips"><button id="breath" class="chip hot">🔥 ブレス／噴射（Space）</button></div>
+    </section>
+    <section data-panel="sword">
+      <div class="row"><b id="score">斬ったブロック 0</b></div>
+      <div class="chips"><button id="sword-color" class="chip">✨ 刀身の色を変える</button><button id="more-blocks" class="chip">🧊 ブロック追加</button></div>
+    </section>
+    <section data-panel="animal">
+      <div class="chips" id="animals"></div>
+    </section>
+    <section data-panel="draw">
+      <div class="chips" id="brushes"></div>
+      <div class="chips"><button id="thick" class="chip">🖌️ 太さ: 中</button><button id="freeze" class="chip">🧊 固める（3D）</button><button id="undo" class="chip">↩︎ 戻す</button><button id="clear" class="chip">🗑️ クリア</button></div>
+    </section>
+    <section data-panel="art">
+      <div class="chips" id="arts"></div>
+    </section>
+    <section data-panel="summon">
+      <div class="chips" id="personas"></div>
+      <form id="chat" class="row" autocomplete="off"><input id="ask" type="text" maxlength="60" placeholder="話しかける（例: 名言を教えて）"><button class="chip send">送信</button></form>
+      <div class="chips"><span id="you"></span><button id="takeout" class="chip hot">🐉 連れ出す</button></div>
+    </section>
+  </div>
+</nav>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
